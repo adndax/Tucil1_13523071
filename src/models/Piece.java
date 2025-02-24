@@ -1,6 +1,8 @@
 package models;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Piece {
     // attributes
@@ -8,20 +10,12 @@ public class Piece {
     private char[][] piece;
 
     // constructor
-    public Piece(char[][] piece) {
-        this.row = piece.length; 
-        this.col = piece[0].length;
-        for (int i = 1; i < this.row; i++) {
-            if (piece[i].length > this.col) {
-                this.col = piece[i].length;
-            }
-        }
+    public Piece(char[][] shape) {
+        this.row = shape.length;
+        this.col = shape[0].length;
         this.piece = new char[row][col];
         for (int i = 0; i < row; i++) {
-            Arrays.fill(this.piece[i], '.'); 
-            for (int j = 0; j < piece[i].length; j++) {
-                this.piece[i][j] = piece[i][j]; 
-            }
+            System.arraycopy(shape[i], 0, this.piece[i], 0, col);
         }
     }
 
@@ -67,7 +61,7 @@ public class Piece {
     }
 
     // flip the piece horizontally
-    public void flipHorizontally() {
+    public void flip() {
         for (int r = 0; r < row; r++) {
             for (int c = 0; c < col / 2; c++) {
                 char temp = piece[r][c];
@@ -77,12 +71,51 @@ public class Piece {
         }
     }
 
-    // flip the piece vertically 
-    public void flipVertically() {
-        for (int r = 0; r < row / 2; r++) {
-            char[] temp = piece[r];
-            piece[r] = piece[row - 1 - r];
-            piece[row - 1 - r] = temp;
+    // copy piece
+    public char[][] copyShape() {
+        char[][] copy = new char[row][col];
+        for (int i = 0; i < row; i++) {
+            System.arraycopy(piece[i], 0, copy[i], 0, col);
         }
+        return copy;
+    }
+
+    // set piece copied
+    public void setPiece(char[][] newShape) {
+        this.piece = newShape;
+        this.row = newShape.length;
+        this.col = newShape[0].length;
+    }
+
+    // 4 rotation and 2 flip
+    public Set<Piece> getUniqueOrientations() {
+        Set<String> seen = new HashSet<>();
+        Set<Piece> orientations = new HashSet<>();
+        char[][] original = copyShape();
+    
+        for (int flipCount = 0; flipCount < 2; flipCount++) {
+            for (int rotationCount = 0; rotationCount < 4; rotationCount++) {
+                String serialized = serializeShape();
+                if (seen.add(serialized)) { 
+                    orientations.add(new Piece(copyShape()));
+                }
+                rotate();
+            }
+            flip();
+            setPiece(original); 
+        }
+    
+        return orientations;
+    }
+
+    private String serializeShape() {
+        StringBuilder sb = new StringBuilder();
+        for (char[] row : piece) {
+            for (char c : row) {
+                sb.append(c);
+            }
+            sb.append(';');
+        }
+        return sb.toString();
     }
 }
