@@ -11,8 +11,6 @@ public class InputHandler {
 
     public InputHandler(String filePath) throws IOException {
         readInputFromFile(filePath);
-        System.out.println("\n✅ Papan setelah input terbaca:");
-        board.printBoard();
     }
 
     private void readInputFromFile(String filePath) throws IOException {
