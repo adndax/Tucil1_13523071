@@ -1,0 +1,6 @@
+##BB##
+##A###
+#AA###
+
+Waktu pencarian: 1 ms
+Banyak kasus yang ditinjau: 22

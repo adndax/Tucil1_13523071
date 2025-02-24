@@ -1,0 +1,7 @@
+BBCA
+BCCA
+BDAA
+DDEE
+
+Waktu pencarian: 2 ms
+Banyak kasus yang ditinjau: 1189
