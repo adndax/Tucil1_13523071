@@ -18,7 +18,7 @@ The program reads input from a `.txt` file specifying the board configuration an
 2. Clone this repository or download the source code.
 
 ```
-git clone https://github.com/your-repo/iq-puzzler-solver.git
+git clone https://github.com/your-repo/iq-puzzler-solver.git](https://github.com/adndax/Tucil1_13523071.git
 ```
 
 ## 3. Compile the Program
